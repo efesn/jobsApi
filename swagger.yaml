@@ -102,7 +102,7 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-  /jobs/658c538725905918ec89d512:
+  /jobs/{id}:
     get:
       tags:
       - Jobs
