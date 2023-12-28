@@ -1,121 +1,96 @@
 openapi: 3.0.0
 info:
-  title: Jobs Api
-  contact: {}
+  title: Jobs API
+  contact: { }
   version: '1.0'
 servers:
-- url: https://jobs-api-02-55e4f411eca1.herokuapp.com/api/v1
-  variables: {}
+  - url: https://jobs-api-02-55e4f411eca1.herokuapp.com/api/v1
+    variables: { }
 paths:
-  /auth/register:
-    post:
-      tags:
-      - Auth
-      summary: Register User
-      operationId: RegisterUser
-      parameters: []
-      requestBody:
-        description: ''
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: '#/components/schemas/RegisterUserRequest'
-              - example:
-                  name: jennifer
-                  email: jennifer@gmail.com
-                  password: secret
-            example:
-              name: jennifer
-              email: jennifer@gmail.com
-              password: secret
-        required: true
-      responses:
-        '200':
-          description: ''
-          headers: {}
-      deprecated: false
-      security: []
   /auth/login:
     post:
       tags:
-      - Auth
-      summary: Login User
-      operationId: LoginUser
-      parameters: []
+        - Auth
+      summary: Login
+      operationId: Login
+      parameters: [ ]
       requestBody:
         description: ''
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/LoginUserRequest'
-              - example:
-                  email: alice@gmail.com
-                  password: secret
+              $ref: '#/components/schemas/LoginRequest'
             example:
-              email: alice@gmail.com
+              email: john2@gmail.com
               password: secret
         required: true
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
-      security: []
-  /jobs:
+      security: [ ]
+  /auth/register:
     post:
       tags:
-      - Jobs
-      summary: Create Job
-      operationId: CreateJob
-      parameters: []
+        - Auth
+      summary: Register
+      operationId: Register
+      parameters: [ ]
       requestBody:
         description: ''
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/CreateJobRequest'
-              - example:
-                  company: facebook
-                  position: ios dev
+              $ref: '#/components/schemas/RegisterRequest'
             example:
-              company: facebook
-              position: ios dev
+              name: jake2
+              email: jake2@gmail.com
+              password: secret
         required: true
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
-      security:
-      - bearer: []
+      security: [ ]
+  /jobs:
     get:
       tags:
-      - Jobs
-      summary: Get All Jobs
-      operationId: GetAllJobs
-      parameters: []
+        - Jobs
+      summary: Jobs
+      operationId: Jobs
+      parameters: [ ]
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
-  /jobs/{id}:
-    get:
+      security:
+        - bearer: [ ]
+    post:
       tags:
-      - Jobs
-      summary: Get Single Job
-      operationId: GetSingleJob
-      parameters: []
+        - Jobs
+      summary: Create-job
+      operationId: Create-job
+      parameters: [ ]
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Create-job-Request'
+            example:
+              company: google
+              position: front-end developer
+        required: true
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
       security:
-      - bearer: []
+        - bearer: [ ]
   /jobs/{id}:
     parameters:
       - in: path
@@ -123,56 +98,78 @@ paths:
         schema:
           type: string
         required: true
-        description: the job id
+        description: The job ID.
+    get:
+      tags:
+        - Jobs
+      summary: Get single job
+      operationId: Getsinglejob
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+          headers: { }
+      deprecated: false
+      security:
+        - bearer: [ ]
     patch:
       tags:
-      - Jobs
-      summary: Update Job
-      operationId: UpdateJob
-      parameters: []
+        - Jobs
+      summary: Update job
+      operationId: Updatejob
+      parameters: [ ]
       requestBody:
         description: ''
         content:
           application/json:
             schema:
-              allOf:
-              - $ref: '#/components/schemas/UpdateJobRequest'
-              - example:
-                  company: random2
-                  position: fullstack developer
+              $ref: '#/components/schemas/UpdatejobRequest'
             example:
-              company: random2
-              position: fullstack developer
+              company: apple
+              position: front-end
         required: true
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
       security:
-      - bearer: []
-
+        - bearer: [ ]
     delete:
       tags:
-      - Jobs
-      summary: Delete Job
-      operationId: DeleteJob
-      parameters: []
+        - Jobs
+      summary: Delete job
+      operationId: Deletejob
+      parameters: [ ]
       responses:
         '200':
           description: ''
-          headers: {}
+          headers: { }
       deprecated: false
       security:
-      - bearer: []
+        - bearer: [ ]
 components:
   schemas:
-    RegisterUserRequest:
-      title: RegisterUserRequest
+    LoginRequest:
+      title: LoginRequest
       required:
-      - name
-      - email
-      - password
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: john2@gmail.com
+        password: secret
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+        - name
+        - email
+        - password
       type: object
       properties:
         name:
@@ -182,28 +179,14 @@ components:
         password:
           type: string
       example:
-        name: jennifer
-        email: jennifer@gmail.com
+        name: jake2
+        email: jake2@gmail.com
         password: secret
-    LoginUserRequest:
-      title: LoginUserRequest
+    Create-job-Request:
+      title: Create-job-Request
       required:
-      - email
-      - password
-      type: object
-      properties:
-        email:
-          type: string
-        password:
-          type: string
-      example:
-        email: alice@gmail.com
-        password: secret
-    CreateJobRequest:
-      title: CreateJobRequest
-      required:
-      - company
-      - position
+        - company
+        - position
       type: object
       properties:
         company:
@@ -211,13 +194,13 @@ components:
         position:
           type: string
       example:
-        company: facebook
-        position: ios dev
-    UpdateJobRequest:
-      title: UpdateJobRequest
+        company: google
+        position: front-end developer
+    UpdatejobRequest:
+      title: UpdatejobRequest
       required:
-      - company
-      - position
+        - company
+        - position
       type: object
       properties:
         company:
@@ -225,15 +208,17 @@ components:
         position:
           type: string
       example:
-        company: random2
-        position: fullstack developer
+        company: apple
+        position: front-end
   securitySchemes:
     bearer:
       type: http
       scheme: bearer
-security: []
+security: [ ]
 tags:
-- name: Auth
-  description: ''
-- name: Jobs
-  description: ''
+  - name: Misc
+    description: ''
+  - name: Auth
+    description: ''
+  - name: Jobs
+    description: ''
