@@ -7,11 +7,11 @@
 2. Configure the following environment variables: 
 `JWT_LIFETIME`:  Recommended value is 30d for JWT token validity. 
  `JWT_SECRET`: Recommended value is a 256-bit encryption key.
- MONGO_URI: To establish database conncetion
-3. Run the following commands in the terminal:
+ `MONGO_URI`: To establish database conncetion
+4. Run the following commands in the terminal:
 
        npm install
-	   npm start
+       npm start
 
 #### Swagger UI
 - Used to create API documentation
